@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+int calculateTotal(int marks[], int numSubjects) {
+    int total = 0;
+    for (int i = 0; i < numSubjects; i++) {
+        total += marks[i];
+    }
+    return total;
+}
+float calculateCGPA(int total, int maxMarks) {
+    return ((float)total / maxMarks) * 10;   
+}
+const char* determineGrade(float cgpa) {
+    if (cgpa >= 9)
+        return "A+";
+    else if (cgpa >= 8)
+        return "A";
+    else if (cgpa >= 7)
+        return "B+";
+    else if (cgpa >= 6)
+        return "B";
+    else if (cgpa >= 5)
+        return "C";
+    else
+        return "F";
+}
+int main() {
+    int numSubjects;
+    printf("Enter the number of subjects: ");
+    scanf("%d", &numSubjects);
+    getchar();
+    char subjectNames[numSubjects][50];
+    int marks[numSubjects];
+    int maxMarksPerSubject = 100; 
+    for (int i = 0; i < numSubjects; i++) {
+        printf("Enter name of subject %d: ", i + 1);
+        fgets(subjectNames[i], sizeof(subjectNames[i]), stdin);
+        subjectNames[i][strcspn(subjectNames[i], "\n")] = '\0'; 
+printf("Enter marks for %s: ", subjectNames[i]);
+scanf("%d", &marks[i]);
+getchar(); 
+    }
+int totalMarks = calculateTotal(marks, numSubjects);
+float cgpa = calculateCGPA(totalMarks, numSubjects * maxMarksPerSubject);
+const char* grade = determineGrade(cgpa);
+
+printf("\n--- RESULT ---\n");
+for (int i = 0; i < numSubjects; i++) {
+ printf("%s: %d\n", subjectNames[i], marks[i]);
+}
+printf("Total Marks: %d\n", totalMarks);
+printf("CGPA: %.2f / 10\n", cgpa);
+printf("Grade: %s\n", grade);
+ return 0;
+}
